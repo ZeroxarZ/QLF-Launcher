@@ -1,24 +1,44 @@
 .global {
-    --element-color: #00bd7a;
-    --transition: all 0.5s cubic-bezier(1, 0.46, 0, 1.29);
-    --dark-color: #292929;
-    --light-color: rgb(245, 245, 245);
+    --element-color: #17c39b;
+    --element-color-2: #22d9ad;
+    --element-color-soft: rgba(23, 195, 155, 0.2);
+    --danger-color: #ff6b6b;
+    --success-color: #5be38f;
+    --transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    --radius-sm: 12px;
+    --radius-md: 18px;
+    --radius-lg: 24px;
+    --border-thin: 1px solid var(--glass-border);
+    --dark-color: #0f171a;
+    --light-color: #f3faf7;
 }
 
 .dark {
-    --color: #F5F5F5;
-    --background: #292929;
-    --background-element: #424242;
-    --background-transparent: #2c2c2ccc;
-    --shadow: rgba(25, 25, 25, 0.7);
-    --svg-color: brightness(0) saturate(100%) invert(100%) sepia(55%) saturate(23%) hue-rotate(236deg) brightness(108%) contrast(92%);
+    --color: #e8f4f1;
+    --color-muted: #a4b9b3;
+    --background: #0f171a;
+    --background-element: #1a2730;
+    --background-transparent: rgba(10, 16, 19, 0.56);
+    --surface: rgba(19, 30, 36, 0.72);
+    --surface-strong: rgba(13, 22, 26, 0.9);
+    --input-bg: rgba(8, 14, 17, 0.66);
+    --shadow: rgba(3, 6, 7, 0.52);
+    --glass-border: rgba(175, 255, 234, 0.18);
+    --ring: rgba(34, 217, 173, 0.3);
+    --svg-color: brightness(0) saturate(100%) invert(95%) sepia(18%) saturate(454%) hue-rotate(102deg) brightness(102%) contrast(93%);
 }
 
 .light {
-    --color: #151515;
-    --background: rgb(245, 245, 245);
-    --background-element: #c2c2c2;
-    --background-transparent: rgba(204, 204, 204, 0.8);
-    --shadow: rgba(208, 208, 208, 0.7);
-    --svg-color: brightness(0) saturate(100%) invert(0%) sepia(5%) saturate(1719%) hue-rotate(357deg) brightness(94%) contrast(84%);
+    --color: #1a2b2c;
+    --color-muted: #4b6360;
+    --background: #eff7f4;
+    --background-element: #d5e7e1;
+    --background-transparent: rgba(248, 255, 252, 0.75);
+    --surface: rgba(255, 255, 255, 0.76);
+    --surface-strong: rgba(255, 255, 255, 0.92);
+    --input-bg: rgba(255, 255, 255, 0.9);
+    --shadow: rgba(31, 73, 63, 0.14);
+    --glass-border: rgba(12, 88, 69, 0.18);
+    --ring: rgba(23, 195, 155, 0.24);
+    --svg-color: brightness(0) saturate(100%) invert(13%) sepia(8%) saturate(1919%) hue-rotate(128deg) brightness(95%) contrast(90%);
 }

@@ -1,17 +1,24 @@
 .login .container {
-    display: flex;
+    position: relative;
+    display: grid;
     align-items: center;
     justify-content: center;
     height: 100%;
+    padding: 3.2rem 1rem 1rem;
 }
 
 .login-tabs {
     position: absolute;
-    padding: 15px;
-    background: var(--background);
-    border-radius: 15px;
+    width: min(480px, calc(100% - 1rem));
+    padding: 1.45rem;
+    background: var(--surface-strong);
+    border: var(--border-thin);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 26px 55px var(--shadow);
     text-align: center;
-    min-width: 40%;
+    transform: translateY(16px) scale(0.98);
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .login-home,
@@ -21,30 +28,125 @@
     display: none;
 }
 
+.login-home[style*='display: block'],
+.login-offline[style*='display: block'],
+.login-AZauth[style*='display: block'],
+.login-AZauth-A2F[style*='display: block'] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    animation: loginCardIn 0.4s ease both;
+}
+
 .login-text {
-    font-size: 1.3rem;
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--color);
+    letter-spacing: 0.02em;
 }
 
 .connect,
 .cancel {
-    background: none;
+    border: none;
+    border-radius: 999px;
+    padding: 0.62rem 1.5rem;
+    min-width: 140px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin: 0.95rem 0.35rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.connect {
+    background: linear-gradient(135deg, var(--element-color), var(--element-color-2));
+    color: #062e26;
+}
+
+.connect:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px var(--ring);
+}
+
+.cancel {
+    background: transparent;
+    color: var(--color-muted);
+    border: 1px solid var(--glass-border);
+}
+
+.cancel:hover {
+    background: rgba(255, 107, 107, 0.14);
+    border-color: rgba(255, 107, 107, 0.35);
     color: var(--color);
-    border: solid 4px var(--element-color);
-    border-radius: 10px;
-    padding: 0.3rem 4rem;
-    font-size: inherit;
-    font-weight: bold;
-    margin: 15px 10px;
+}
+
+.input-login {
+    display: grid;
+    gap: 0.68rem;
+}
+
+.login-options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .input-login .email,
 .input-login .password,
 .A2F {
     color: var(--color);
-    background: none;
-    border: solid 2px var(--element-color);
-    border-radius: 30px;
-    width: 50%;
-    padding: 0.4rem 1rem;
-    margin-top: 10px;
+    background: var(--input-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    width: min(360px, 92%);
+    padding: 0.7rem 1rem;
+    margin: 0 auto;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.input-login .email::placeholder,
+.input-login .password::placeholder,
+.A2F::placeholder {
+    color: color-mix(in srgb, var(--color-muted) 85%, transparent);
+}
+
+.input-login .email:focus,
+.input-login .password:focus,
+.A2F:focus {
+    border-color: rgba(34, 217, 173, 0.7);
+    box-shadow: 0 0 0 4px var(--ring);
+}
+
+@keyframes loginCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 640px) {
+    .login .container {
+        padding-top: 3rem;
+    }
+
+    .login-tabs {
+        padding: 1.15rem 0.9rem;
+    }
+
+    .login-text {
+        font-size: 0.95rem;
+    }
+
+    .connect,
+    .cancel {
+        min-width: 128px;
+        padding: 0.58rem 1.2rem;
+    }
 }

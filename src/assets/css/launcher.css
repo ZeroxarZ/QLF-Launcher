@@ -4,13 +4,50 @@
 @import 'panels/home.css';
 @import 'panels/settings.css';
 
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
 body {
     margin: 0;
     padding: 0;
     user-select: none;
     color: var(--color);
-    font-family: 'Poppins';
-    font-weight: bolder;
+    font-family: 'Poppins', 'Segoe UI Variable Text', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--background);
+    transition: color 0.35s ease, background-color 0.35s ease;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 8% 12%, rgba(34, 217, 173, 0.22), transparent 34%),
+        radial-gradient(circle at 88% 18%, rgba(86, 227, 143, 0.18), transparent 30%),
+        linear-gradient(145deg, rgba(7, 12, 14, 0.6), rgba(11, 20, 24, 0.35));
+    z-index: -2;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 28px 28px, 18px 18px;
+    background-position: 0 0, 10px 10px;
+    opacity: 0.14;
+    z-index: -1;
 }
 
 img {
@@ -20,6 +57,14 @@ img {
 
 * {
     outline: none;
+    box-sizing: border-box;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+    color: inherit;
 }
 
 input::-webkit-outer-spin-button,
@@ -30,71 +75,110 @@ input::-webkit-inner-spin-button {
 
 .content-scroll {
     overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--element-color) transparent;
 }
 
 .content-scroll::-webkit-scrollbar {
-    width: 0;
+    width: 8px;
+    height: 8px;
+}
+
+.content-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.content-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--element-color), var(--element-color-2));
+    border-radius: 999px;
 }
 
 .dragbar {
     position: fixed;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 26px;
+    height: 32px;
     -webkit-app-region: drag;
-    z-index: 11;
+    z-index: 25;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.16), transparent);
+}
+
+.darwin .frame,
+.other .frame {
+    position: fixed;
+    top: 4px;
+    z-index: 26;
+    -webkit-app-region: no-drag;
+    display: none;
+    align-items: center;
+    border: var(--border-thin);
+    border-radius: 999px;
+    backdrop-filter: blur(12px);
+    background: var(--surface);
+    box-shadow: 0 8px 30px var(--shadow);
 }
 
 .darwin .frame {
-    background: transparent;
-    position: fixed;
-    top: 0px;
-    z-index: 11;
-    -webkit-app-region: no-drag;
-    display: none;
+    left: 10px;
+    padding: 4px 8px;
+    gap: 6px;
 }
 
 .other .frame {
-    background: transparent;
-    position: fixed;
-    top: 0px;
-    right: 0px;
-    z-index: 11;
-    -webkit-app-region: no-drag;
-    display: none;
+    right: 10px;
+    overflow: hidden;
 }
 
 .frame.hide {
-    display: block;
+    display: flex;
+    animation: frameIn 0.45s ease both;
+}
+
+.darwin .button-frame,
+.other .button-frame {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
 }
 
 .darwin .button-frame {
-    position: relative;
-    display: table-cell;
-    width: 20px;
-    height: 26px;
-    transition: color .2s, background-color .2s;
-}
-
-.other .button-frame {
-    position: relative;
-    display: table-cell;
-    width: 30px;
-    height: 26px;
-    transition: color .2s, background-color .2s;
-    color: black;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
     cursor: pointer;
 }
 
 .button-frame:before {
-    position: absolute;
-    top: 6px;
-    left: 8px;
-    width: 14px;
-    height: 14px;
-    font-size: 14px;
-    color: #f8f9f9;
+    position: static;
+    font-size: 13px;
+    color: inherit;
+}
+
+.darwin .button-frame:hover {
+    transform: translateY(-1px) scale(1.06);
+    filter: brightness(1.06);
+}
+
+.other .button-frame {
+    width: 38px;
+    height: 28px;
+    color: var(--color-muted);
+    border-left: 1px solid transparent;
+    cursor: pointer;
+}
+
+.other .button-frame:hover {
+    color: var(--color);
+    background: var(--element-color-soft);
+}
+
+.other .icon-minimize:hover,
+.other .icon-restore-down:hover,
+.other .icon-maximize:hover {
+    border-left-color: var(--glass-border);
 }
 
 .darwin-icon-minimize,
@@ -109,87 +193,171 @@ input::-webkit-inner-spin-button {
     content: '';
     position: absolute;
     border-radius: 50%;
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
     cursor: pointer;
 }
 
 .darwin-icon-maximize:before {
-    background: #07d014;
+    background: #34d399;
 }
 
 .darwin-icon-minimize:before {
-    background: #ffbd2e;
+    background: #f6bf4c;
 }
 
 .darwin-icon-close:before {
-    background: #ff6047;
+    background: #ff6b6b;
 }
 
-.icon-close:hover {
-    background: #e21212;
-}
-
-.icon-minimize:hover,
-.icon-restore-down:hover,
-.icon-maximize:hover {
-    background-color: #0000009d;
+.other .icon-close:hover {
+    color: #ffe2e2;
+    background: rgba(255, 107, 107, 0.28);
 }
 
 .popup {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
+    inset: 0;
+    z-index: 40;
     display: none;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 1.25rem;
+    backdrop-filter: blur(3px);
+    animation: fadeIn 0.25s ease;
 }
 
 .popup-tab {
-    width: 40%;
-    padding: 15px;
-    background: var(--background);
-    border-radius: 15px;
-    z-index: 10;
+    width: min(540px, 100%);
+    padding: 1.25rem 1.4rem;
+    background: var(--surface-strong);
+    border: var(--border-thin);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 60px var(--shadow);
+    z-index: 42;
+    animation: popupIn 0.34s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 .popup-title {
     text-align: center;
-    font-size: 2rem;
-    border-bottom: solid 4px var(--color);
-    margin-bottom: 1rem;
+    font-size: 1.45rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: var(--border-thin);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.6rem;
+}
+
+.popup-content {
+    font-weight: 500;
+    line-height: 1.45;
 }
 
 .popup-options {
     display: none;
-    align-items: end;
-    flex-direction: column;
+    justify-content: flex-end;
+    margin-top: 1rem;
 }
 
 .popup-button {
-    background: none;
-    color: var(--color);
-    border: solid 4px var(--element-color);
-    border-radius: 10px;
-    padding: 0.3rem 4rem;
-    font-size: inherit;
-    font-weight: bold;
-    margin: 15px 10px;
+    background: linear-gradient(135deg, var(--element-color), var(--element-color-2));
+    color: #052e24;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.55rem 2.7rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.popup-button:hover {
+    filter: brightness(1.07);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px var(--ring);
+}
+
+.panels {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
 }
 
 .panel {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     opacity: 0;
     z-index: 0;
     pointer-events: none;
+    transform: translateY(16px) scale(0.985);
+    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.active {
+.panel.active {
     opacity: 1;
     z-index: 1;
     pointer-events: all;
+    transform: translateY(0) scale(1);
+    animation: panelFade 0.45s ease both;
+}
+
+@keyframes frameIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes popupIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes panelFade {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 920px) {
+    .other .frame {
+        right: 6px;
+        top: 3px;
+    }
+
+    .dragbar {
+        height: 34px;
+    }
+
+    .popup-tab {
+        padding: 1.1rem;
+    }
 }
