@@ -1,7 +1,7 @@
 {
     "name": "QLF-Launcher",
     "preductname": "QLF Launcher",
-    "version": "2.0.8",
+    "version": "2.0.9",
     "description": "Launcher Mincraft pour le serveur Selvania",
     "main": "src/app.js",
     "author": {
@@ -39,6 +39,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ZeroxarZ/QLF-Launcher-Releases.git"
+        "url": "git+https://github.com/ZeroxarZ/QLF-Launcher.git"
     }
 }
