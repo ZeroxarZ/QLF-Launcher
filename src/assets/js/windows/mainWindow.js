@@ -33,6 +33,7 @@ function createWindow() {
         show: false,
         webPreferences: {
             contextIsolation: false,
+            devTools: dev, //true si dev et dev si PROD
             nodeIntegration: true
         },
     });
