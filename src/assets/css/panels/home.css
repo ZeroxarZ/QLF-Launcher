@@ -50,6 +50,25 @@
     color: var(--success-color);
 }
 
+.server-status-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+}
+
+.server-status-ip {
+    margin-top: 0.2rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    background: var(--background-transparent);
+    border: var(--border-thin);
+    border-radius: 999px;
+    padding: 0.12rem 0.5rem;
+    line-height: 1.2;
+}
+
 .server-status-infos .red,
 .server-status-text.red {
     color: var(--danger-color);
