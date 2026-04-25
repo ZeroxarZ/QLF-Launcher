@@ -3,12 +3,13 @@ on:
   push:
     branches: [ master ]
 
+# 1. PERMISSION GLOBALE : Appliquée à tous les jobs de ce fichier
+permissions:
+  contents: write 
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
-    # 1. AJOUT DE LA PERMISSION ICI POUR LE GITHUB_TOKEN
-    permissions:
-      contents: write 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,7 +19,7 @@ jobs:
       
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v2 # 2. ACTION MODERNE
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.version }}
           name: release ${{ env.version }}
@@ -35,7 +36,7 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v4 # 3. MISE A JOUR V4
+        uses: actions/checkout@v4
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -53,6 +54,7 @@ jobs:
 
       - name: Build
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # electron-builder utilise cette variable pour uploader les fichiers
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         run: npm run build
         shell: bash
